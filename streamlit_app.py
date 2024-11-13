@@ -50,11 +50,7 @@ def answer_questions():
 
     # Web app UI - title and input box for the question
     st.title('🌠Test watsonx.ai LLM')
-    user_question = st.text_input('Ask a question, for example: What is IBM?')
-
-    # If the quesiton is blank, let's prevent LLM from showing a random fact, so we will ask a question
-    if len(user_question.strip())==0:
-        user_question="What is IBM?"
+    user_question = st.text_input('Ask a question')
 
     # Get the prompt
     final_prompt = get_prompt(user_question)
