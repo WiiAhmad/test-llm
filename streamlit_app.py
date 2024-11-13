@@ -54,10 +54,10 @@ def answer_questions():
     user_question = st.text_input('Ask a question')
 
     # Get the prompt
-    final_prompt = get_prompt(user_question)
+    #final_prompt = get_prompt(user_question)
 
     # Display our complete prompt - for debugging/understanding
-    print(final_prompt)
+    print(user_question)
 
     # Look up parameters in documentation:
     # https://ibm.github.io/watson-machine-learning-sdk/foundation_models.html#
@@ -71,7 +71,7 @@ def answer_questions():
     model = get_model(model_type, max_tokens, min_tokens, decoding,stop_sequences)
 
     # Generate response
-    generated_response = model.generate(prompt=final_prompt)
+    generated_response = model.generate(prompt=user_question)
     model_output = generated_response['results'][0]['generated_text']
     # For debugging
     print("Answer: " + model_output)
