@@ -34,13 +34,14 @@ def get_prompt(question):
     # Instruction
     instruction = "Answer this question briefly."
     # Examples to help the model set the context
-    examples = "\n\nQuestion: What is the capital of Germany\nAnswer: Berlin\n\nQuestion: What year was George Washington born?\nAnswer: 1732\n\nQuestion: What are the main micro nutrients in food?\nAnswer: Protein, carbohydrates, and fat\n\nQuestion: What language is spoken in Brazil?\nAnswer: Portuguese \n\nQuestion: "
+    #examples = "\n\nQuestion: What is the capital of Germany\nAnswer: Berlin\n\nQuestion: What year was George Washington born?\nAnswer: 1732\n\nQuestion: What are the main micro nutrients in food?\nAnswer: Protein, carbohydrates, and fat\n\nQuestion: What language is spoken in Brazil?\nAnswer: Portuguese \n\nQuestion: "
     # Question entered in the UI
     your_prompt = question
     # Since LLMs want to "complete a document", we're are giving it a "pattern to complete" - provide the answer
     end_prompt = "Answer:"
 
-    final_prompt = instruction + examples + your_prompt + end_prompt
+    #final_prompt = instruction + examples + your_prompt + end_prompt
+    final_prompt = instruction + your_prompt + end_prompt
 
     return final_prompt
 
