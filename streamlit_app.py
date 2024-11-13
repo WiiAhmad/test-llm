@@ -58,10 +58,10 @@ def answer_questions():
     #    user_question="What is IBM?"
 
     # Get the prompt
-    final_prompt = get_prompt(user_question)
+    #final_prompt = get_prompt(user_question)
 
     # Display our complete prompt - for debugging/understanding
-    print(final_prompt)
+    #print(final_prompt)
 
     # Look up parameters in documentation:
     # https://ibm.github.io/watson-machine-learning-sdk/foundation_models.html#
@@ -75,15 +75,15 @@ def answer_questions():
     model = get_model(model_type, max_tokens, min_tokens, decoding,stop_sequences)
 
     # Generate response
-    generated_response = model.generate(prompt=final_prompt)
-    model_output = generated_response['results'][0]['generated_text']
+    generated_response = model.generate(prompt=user_question)
+    #model_output = generated_response['results'][0]['generated_text']
     # For debugging
-    print("Answer: " + model_output)
+    print("Answer: " + generated_response)
 
     # Display output on the Web page
     formatted_output = f"""
         **Answer to your question:** {user_question} \
-        *{model_output}*</i>
+        *{generated_response}*</i>
         """
     st.markdown(formatted_output, unsafe_allow_html=True)
 
