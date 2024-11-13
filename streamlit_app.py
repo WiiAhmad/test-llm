@@ -47,7 +47,7 @@ def get_prompt(question):
 def answer_questions():
 
     # Set the api key and project id global variables
-    get_credentials()
+    #get_credentials()
 
     # Web app UI - title and input box for the question
     st.title('🌠Test watsonx.ai LLM')
