@@ -34,30 +34,34 @@ def get_prompt(question):
     # Instruction
     instruction = "Answer this question briefly."
     # Examples to help the model set the context
-    #examples = "\n\nQuestion: What is the capital of Germany\nAnswer: Berlin\n\nQuestion: What year was George Washington born?\nAnswer: 1732\n\nQuestion: What are the main micro nutrients in food?\nAnswer: Protein, carbohydrates, and fat\n\nQuestion: What language is spoken in Brazil?\nAnswer: Portuguese \n\nQuestion: "
+    examples = "\n\nQuestion: What is the capital of Germany\nAnswer: Berlin\n\nQuestion: What language is spoken in Brazil?\nAnswer: Portuguese \n\nQuestion: "
     # Question entered in the UI
     your_prompt = question
     # Since LLMs want to "complete a document", we're are giving it a "pattern to complete" - provide the answer
     end_prompt = "Answer:"
 
-    #final_prompt = instruction + examples + your_prompt + end_prompt
-    final_prompt = instruction + your_prompt + end_prompt
+    final_prompt = instruction + examples + your_prompt + end_prompt
 
     return final_prompt
 
 def answer_questions():
 
     # Set the api key and project id global variables
+    get_credentials()
 
     # Web app UI - title and input box for the question
     st.title('🌠Test watsonx.ai LLM')
-    user_question = st.text_input('Ask a question')
+    user_question = st.text_input('Ask a question, for example: What is IBM?')
+
+    # If the quesiton is blank, let's prevent LLM from showing a random fact, so we will ask a question
+    #if len(user_question.strip())==0:
+    #    user_question="What is IBM?"
 
     # Get the prompt
-    #final_prompt = get_prompt(user_question)
+    final_prompt = get_prompt(user_question)
 
     # Display our complete prompt - for debugging/understanding
-    print(user_question)
+    print(final_prompt)
 
     # Look up parameters in documentation:
     # https://ibm.github.io/watson-machine-learning-sdk/foundation_models.html#
@@ -71,7 +75,7 @@ def answer_questions():
     model = get_model(model_type, max_tokens, min_tokens, decoding,stop_sequences)
 
     # Generate response
-    generated_response = model.generate(prompt=user_question)
+    generated_response = model.generate(prompt=final_prompt)
     model_output = generated_response['results'][0]['generated_text']
     # For debugging
     print("Answer: " + model_output)
