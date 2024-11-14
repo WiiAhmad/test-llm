@@ -7,13 +7,12 @@ from ibm_watson_machine_learning.foundation_models.utils.enums import ModelTypes
 
 url = "https://us-south.ml.cloud.ibm.com"
 
-def get_model(model_type,max_tokens,min_tokens,decoding,stop_sequences):
+def get_model(model_type,max_tokens,min_tokens,decoding):
 
     generate_params = {
         GenParams.MAX_NEW_TOKENS: max_tokens,
         GenParams.MIN_NEW_TOKENS: min_tokens,
-        GenParams.DECODING_METHOD: decoding,
-        GenParams.STOP_SEQUENCES:stop_sequences
+        GenParams.DECODING_METHOD: decoding
     }
 
     model = Model(
@@ -28,64 +27,27 @@ def get_model(model_type,max_tokens,min_tokens,decoding,stop_sequences):
 
     return model
 
-def get_prompt(question):
-
-    # Prompts are passed to LLMs as one string. We are building it out as separate strings for ease of understanding
-    # Instruction
-    instruction = "Answer this question briefly."
-    # Examples to help the model set the context
-    examples = "\n\nQuestion: What is the capital of Germany\nAnswer: Berlin\n\nQuestion: What language is spoken in Brazil?\nAnswer: Portuguese \n\nQuestion: "
-    # Question entered in the UI
-    your_prompt = question
-    # Since LLMs want to "complete a document", we're are giving it a "pattern to complete" - provide the answer
-    end_prompt = "Answer:"
-
-    final_prompt = instruction + examples + your_prompt + end_prompt
-
-    return final_prompt
-
 def answer_questions():
-
-    # Set the api key and project id global variables
-    #get_credentials()
-
-    # Web app UI - title and input box for the question
     st.title('🌠Test watsonx.ai LLM')
+    st.info('Created by : Ahmad Maulana Yusuf | GEN AI & ML')
     user_question = st.text_input('Ask a question, for example: What is IBM?')
+    st.info('Masukan pertanyaan lalu enter dan tunggu akan menggenerate jawaban sesuai pertanyaan')
+    if user_question.strip():
+        #st.info(f'Testing info: {user_question}')
+        model_type = ModelTypes.FLAN_UL2
+        max_tokens = 100
+        min_tokens = 20
+        decoding = DecodingMethods.GREEDY
 
-    # If the quesiton is blank, let's prevent LLM from showing a random fact, so we will ask a question
-    #if len(user_question.strip())==0:
-    #    user_question="What is IBM?"
+        model = get_model(model_type, max_tokens, min_tokens, decoding)
 
-    # Get the prompt
-    #final_prompt = get_prompt(user_question)
-
-    # Display our complete prompt - for debugging/understanding
-    #print(final_prompt)
-
-    # Look up parameters in documentation:
-    # https://ibm.github.io/watson-machine-learning-sdk/foundation_models.html#
-    model_type = ModelTypes.FLAN_UL2
-    max_tokens = 100
-    min_tokens = 20
-    decoding = DecodingMethods.GREEDY
-    stop_sequences = ['.']
-
-    # Get the model
-    model = get_model(model_type, max_tokens, min_tokens, decoding,stop_sequences)
-
-    # Generate response
-    generated_response = model.generate(prompt=user_question)
-    #model_output = generated_response['results'][0]['generated_text']
-    # For debugging
-    print("Answer: " + generated_response)
-
-    # Display output on the Web page
-    formatted_output = f"""
+        generated_response = model.generate(prompt=user_question)
+        #print("Answer: " + generated_response)
+        formatted_output = f"""
         **Answer to your question:** {user_question} \
         *{generated_response}*</i>
         """
-    st.markdown(formatted_output, unsafe_allow_html=True)
+        st.markdown(formatted_output, unsafe_allow_html=True)
 
-# Invoke the main function
-answer_questions()
+if __name__ == "__main__":
+    answer_questions()
