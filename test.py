@@ -29,7 +29,7 @@ def get_model(model_type,max_tokens,min_tokens,decoding):
 
 def answer_questions():
     st.title('🌠Test watsonx.ai LLM')
-    st.info('Created by : Ahmad Maulana Yusuf | GEN AI & ML')
+    st.info('Created by : Ahmad Maulana Yusuf | GEN AI & ML \n\n sc : https://github.com/WiiAhmad/test-llm')
     user_question = st.text_input('Ask a question, for example: What is IBM?')
     st.info('Masukan pertanyaan lalu enter dan tunggu akan menggenerate jawaban sesuai pertanyaan')
     if user_question.strip():
